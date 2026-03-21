@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="first-service" />
+        <module name="apigateway-service" />
         <module name="second-service" />
         <module name="service-discovery" />
       </profile>
@@ -18,7 +19,6 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
-        <module name="apigateway-service" />
         <module name="user-service" />
       </profile>
     </annotationProcessing>
