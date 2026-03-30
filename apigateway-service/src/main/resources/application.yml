@@ -51,4 +51,4 @@ spring:
                 - Path=/user-service/**
               filters:
                 - CustomFilter
-                - RewritePath=/user-service/(?<segment>.*), /${segment}
+#                - RewritePath=/user-service/(?<segment>.*), /${segment}

@@ -1,5 +1,6 @@
 package com.example.userservice.dto;
 
+import com.example.userservice.vo.ResponseOrder;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -11,12 +12,27 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 public class UserDto {
 
     private String userId;
     private String email;
     private String name;
+
+    private String pwd;
+
+    private List<ResponseOrder> orders;
+
+    public List<ResponseOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<ResponseOrder> orders) {
+        this.orders = orders;
+    }
 
     public String getUserId() {
         return userId;
@@ -40,5 +56,13 @@ public class UserDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 }
