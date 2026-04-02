@@ -11,6 +11,7 @@
         <module name="apigateway-service" />
         <module name="second-service" />
         <module name="service-discovery" />
+        <module name="catalog-service" />
       </profile>
       <profile name="Annotation profile for spring-msa-toy" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -23,7 +24,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="catalog-service" target="19" />
       <module name="config-service" target="19" />
       <module name="new-toy-msa" target="1.5" />
       <module name="order-service" target="19" />
