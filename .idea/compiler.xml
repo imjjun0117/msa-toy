@@ -8,10 +8,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="first-service" />
+        <module name="order-service" />
         <module name="apigateway-service" />
         <module name="second-service" />
         <module name="service-discovery" />
-        <module name="catalog-service" />
       </profile>
       <profile name="Annotation profile for spring-msa-toy" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -24,15 +24,18 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="catalog-service (1)" target="19" />
+      <module name="catalog-service (2)" target="19" />
       <module name="config-service" target="19" />
       <module name="new-toy-msa" target="1.5" />
-      <module name="order-service" target="19" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="apigateway-service" options="-parameters" />
       <module name="catalog-service" options="-parameters" />
+      <module name="catalog-service (1)" options="-parameters" />
+      <module name="catalog-service (2)" options="-parameters" />
       <module name="config-service" options="-parameters" />
       <module name="first-service" options="-parameters" />
       <module name="order-service" options="-parameters" />

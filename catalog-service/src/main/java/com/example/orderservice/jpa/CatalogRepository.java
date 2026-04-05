@@ -1,6 +1,6 @@
-package com.example.catalogservice.jpa;
+package com.example.orderservice.jpa;
 
-import com.example.catalogservice.vo.CatalogEntity;
+import com.example.orderservice.vo.CatalogEntity;
 import org.springframework.data.repository.CrudRepository;
 
 public interface CatalogRepository extends CrudRepository<CatalogEntity, Long> {

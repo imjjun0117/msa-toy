@@ -1,15 +1,13 @@
-package com.example.catalogservice.controller;
+package com.example.orderservice.controller;
 
-import com.example.catalogservice.service.CatalogSercvice;
-import com.example.catalogservice.vo.CatalogEntity;
-import com.example.catalogservice.vo.ResponseCatalog;
+import com.example.orderservice.service.CatalogSercvice;
+import com.example.orderservice.vo.CatalogEntity;
+import com.example.orderservice.vo.ResponseCatalog;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,7 +1,7 @@
-package com.example.catalogservice.service;
+package com.example.orderservice.service;
 
-import com.example.catalogservice.jpa.CatalogRepository;
-import com.example.catalogservice.vo.CatalogEntity;
+import com.example.orderservice.jpa.CatalogRepository;
+import com.example.orderservice.vo.CatalogEntity;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

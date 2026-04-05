@@ -19,6 +19,7 @@
         <module>user-service</module>
         <module>apigateway-service</module>
         <module>catalog-service</module>
+        <module>order-service</module>
     </modules>
     <name>spring-msa-toy</name>
     <description>spring-msa-toy</description>
