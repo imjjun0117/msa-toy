@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -44,13 +45,16 @@ public class WebSecurity {
         http.csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**").permitAll() // 특정 경로 허용
-                        .requestMatchers("/**").access(
-                                new WebExpressionAuthorizationManager(
-                                        "hasIpAddress('127.0.0.1') or hasIpAddress('::1') or" +
-                                        "hasIpAddress('172.29.75.182') or hasIpAddress('::1')"))
-                        .anyRequest().authenticated()
+                        .requestMatchers("/**").access((authentication, context) -> {
+                            String ip = context.getRequest().getRemoteAddr();
 
+                            boolean allowed =
+                                    ip.equals("127.0.0.1") ||
+                                            ip.equals("0:0:0:0:0:0:0:1") ||
+                                            ip.equals("192.168.0.8");
 
+                            return new AuthorizationDecision(allowed);
+                        })
                 )
                 .authenticationManager(authenticationManager)
                 .addFilter(getAuthenticationFilter(authenticationManager))

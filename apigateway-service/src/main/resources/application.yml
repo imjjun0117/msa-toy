@@ -7,7 +7,6 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
-
 spring:
   application:
     name: apigateway-service
@@ -44,14 +43,29 @@ spring:
                     baseMessage: Hi, there
                     preLogger: true
                     postLogger: true
-
+            - id: user-service-register
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/user-service/users
+                - Method=POST
+              filters:
+                - RemoveRequestHeader=Cookie
+                - RewritePath=/user-service/(?<segment>.*), /${segment}
+            - id: user-service-login
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/user-service/login
+                - Method=POST
+              filters:
+                - RemoveRequestHeader=Cookie
+                - RewritePath=/user-service/(?<segment>.*), /${segment}
             - id: user-service
               uri: lb://USER-SERVICE
               predicates:
                 - Path=/user-service/**
               filters:
-                - CustomFilter
-#                - RewritePath=/user-service/(?<segment>.*), /${segment}
+                - RemoveRequestHeader=Cookie
+                - RewritePath=/user-service/(?<segment>.*), /${segment} # /user-service -> requestmapping 맞출 필요가 없어짐
             - id: catalog-service
               uri: lb://CATALOG-SERVICE
               predicates:

@@ -21,7 +21,7 @@ spring:
   security:
     user:
       name: user
-      password: $2a$10$6NSqyFJmpA9Ov6XEWVpCM.9o6TVB0ifikBI6z6lgpqPkUYGXPa542
+      password: $2a$10$8peVO1zUwEYFHmuIQvzR7O4I4o45PkcDgaqTNQlrxpg8x1CNCiBkK
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
