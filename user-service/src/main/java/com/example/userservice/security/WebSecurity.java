@@ -12,21 +12,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.IpAddressMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurity {
     private UserService userService;
     private Environment env;
-
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public static final String ALLOWED_IP_ADDRESS = "127.0.0.1";
-    public static final String SUBNET = "/32";
-    public static final IpAddressMatcher ALLOWED_IP_ADDRESSS_MATCHER = new IpAddressMatcher(ALLOWED_IP_ADDRESS+SUBNET);
 
     public WebSecurity(Environment env, UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.env = env;
@@ -44,30 +37,29 @@ public class WebSecurity {
 
         http.csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/h2-console/**").permitAll() // 특정 경로 허용
-                        .requestMatchers("/**").access((authentication, context) -> {
-                            String ip = context.getRequest().getRemoteAddr();
-
-                            boolean allowed =
-                                    ip.equals("127.0.0.1") ||
-                                            ip.equals("0:0:0:0:0:0:0:1") ||
-                                            ip.equals("192.168.0.8");
-
-                            return new AuthorizationDecision(allowed);
-                        })
+                        .requestMatchers("/h2-console/**").permitAll()
+//                        .requestMatchers("/**").access((authentication, context) -> {
+//                            String ip = context.getRequest().getRemoteAddr();
+//                            boolean allowed =
+//                                    ip.equals("127.0.0.1") ||
+//                                    ip.equals("0:0:0:0:0:0:0:1") ||
+//                                    ip.equals("192.168.0.8");
+//                            return new AuthorizationDecision(allowed);
+//                        })
+                        .requestMatchers("/**").permitAll()
                 )
                 .authenticationManager(authenticationManager)
                 .addFilter(getAuthenticationFilter(authenticationManager))
-                .httpBasic(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults()) // Basic 인증 추가
                 .headers((headers) -> headers.frameOptions((frameOptions) -> frameOptions.sameOrigin()));
 
         return http.build();
     }
 
-    private UsernamePasswordAuthenticationFilter getAuthenticationFilter(AuthenticationManager authenticationManager) {
-        UsernamePasswordAuthenticationFilter filter = new UsernamePasswordAuthenticationFilter();
-        filter.setAuthenticationManager(authenticationManager);
-        filter.setFilterProcessesUrl("/login"); // 로그인 URL
-        return filter;
+    private AuthenticationFilter getAuthenticationFilter(AuthenticationManager authenticationManager) {
+       AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+       authenticationFilter.setAuthenticationManager(authenticationManager);
+
+       return authenticationFilter;
     }
 }
