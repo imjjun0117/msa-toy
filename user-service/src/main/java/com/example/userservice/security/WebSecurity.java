@@ -57,7 +57,7 @@ public class WebSecurity {
     }
 
     private AuthenticationFilter getAuthenticationFilter(AuthenticationManager authenticationManager) {
-       AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+       AuthenticationFilter authenticationFilter = new AuthenticationFilter(this.userService, this.env, authenticationManager);
        authenticationFilter.setAuthenticationManager(authenticationManager);
 
        return authenticationFilter;
