@@ -78,3 +78,7 @@ spring:
               uri: lb://ORDER-SERVICE
               predicates:
                 - Path=/order-service/**
+
+
+token:
+  secret: my-very-long-secret-key-123948
