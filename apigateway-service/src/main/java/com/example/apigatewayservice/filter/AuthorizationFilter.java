@@ -1,7 +1,6 @@
 package com.example.apigatewayservice.filter;
 
-import org.apache.http.HttpHeaders;
-import org.bouncycastle.jcajce.BCFKSLoadStoreParameter;
+import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -74,9 +74,19 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
     }
 
     private boolean isJwtValid(String jwt) {
-        byte[] secretKeyBytes = env.getProperty("token.secret").getBytes();
-//        SecretKey signingKey = new SecretKeySpec(secretKeyBytes,)
-        return false;
+        byte[] secretKeyBytes = env.getProperty("token.secret").getBytes(StandardCharsets.UTF_8);
+        SecretKey signingKey = new SecretKeySpec(secretKeyBytes, "HmacSHA512");
+
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(signingKey)
+                    .build()
+                    .parseClaimsJws(jwt);
+            return true;
+        } catch (Exception e) {
+            log.error("JWT validation error: {}", e.getMessage());
+            return false;
+        }
     }
 
 
