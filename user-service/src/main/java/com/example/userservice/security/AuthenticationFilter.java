@@ -5,6 +5,7 @@ import com.example.userservice.service.UserService;
 import com.example.userservice.vo.RequestLogin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -77,10 +78,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         Instant now = Instant.now();
 
         String token = Jwts.builder()
-                .subject(userDetails.getUserId())
-                .expiration(Date.from(now.plusMillis(Long.parseLong(env.getProperty("token.expiration-time")))))
-                .issuedAt(Date.from(now))
-                .signWith(secretKey)
+                .setSubject(userDetails.getUserId())
+                .setExpiration(Date.from(now.plusMillis(Long.parseLong(env.getProperty("token.expiration-time")))))
+                .setIssuedAt(Date.from(now))
+                .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
         response.addHeader("token", token);
         response.addHeader("userId", userDetails.getUserId());

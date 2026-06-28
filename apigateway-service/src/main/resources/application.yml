@@ -67,9 +67,11 @@ spring:
               uri: lb://USER-SERVICE
               predicates:
                 - Path=/user-service/**
+                - Method=GET
               filters:
                 - RemoveRequestHeader=Cookie
                 - RewritePath=/user-service/(?<segment>.*), /${segment} # /user-service -> requestmapping 맞출 필요가 없어짐
+                - AuthorizationHeaderFilter
             - id: catalog-service
               uri: lb://CATALOG-SERVICE
               predicates:
@@ -81,4 +83,4 @@ spring:
 
 
 token:
-  secret: my-very-long-secret-key-123948
+  secret: my-very-long-secret-key-1239481239481239481239481239481239481239481

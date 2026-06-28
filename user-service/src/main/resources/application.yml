@@ -36,5 +36,5 @@ greeting:
 
 
 token:
-  secret: my-very-long-secret-key-123948
+  secret: my-very-long-secret-key-1239481239481239481239481239481239481239481
   expiration-time: 86400000 # 10days

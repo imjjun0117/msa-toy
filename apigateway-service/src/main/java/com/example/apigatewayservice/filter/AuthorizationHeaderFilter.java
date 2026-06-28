@@ -1,6 +1,8 @@
 package com.example.apigatewayservice.filter;
 
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +26,15 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class AuthorizationFilter extends AbstractGatewayFilterFactory<AuthorizationFilter.Config> {
+public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
 
-    private static final Logger log = LoggerFactory.getLogger(AuthorizationFilter.class);
+    private static final Logger log = LoggerFactory.getLogger(AuthorizationHeaderFilter.class);
 
     @Autowired
     private Environment env;
 
 
-    public AuthorizationFilter() {
+    public AuthorizationHeaderFilter() {
         super(Config.class);
     }
 
@@ -51,8 +53,8 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
                 return onError(exchange, "No Authorization header", HttpStatus.UNAUTHORIZED);
             }
 
-            String authorizationHeader = request.getHeaders().get(org.springframework.http.HttpHeaders.AUTHORIZATION).get(0);
-            String jwt = authorizationHeader.replace("Bearer", "");
+            String authorizationHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
+            String jwt = authorizationHeader.replace("Bearer ", "");
 
             if(!isJwtValid(jwt)) {
                 return onError(exchange, "JWT token is not valid", HttpStatus.UNAUTHORIZED);
@@ -75,18 +77,28 @@ public class AuthorizationFilter extends AbstractGatewayFilterFactory<Authorizat
 
     private boolean isJwtValid(String jwt) {
         byte[] secretKeyBytes = env.getProperty("token.secret").getBytes(StandardCharsets.UTF_8);
-        SecretKey signingKey = new SecretKeySpec(secretKeyBytes, "HmacSHA512");
+        SecretKey signingKey = new SecretKeySpec(secretKeyBytes, SignatureAlgorithm.HS512.getJcaName());
+
+        boolean returnValue = true;
+        String subject = null;
 
         try {
-            Jwts.parserBuilder()
+            JwtParser jwtParser =  Jwts.parserBuilder()
                     .setSigningKey(signingKey)
-                    .build()
-                    .parseClaimsJws(jwt);
+                    .build();
+
+            subject = jwtParser.parseClaimsJwt(jwt).getBody().getSubject();
             return true;
         } catch (Exception e) {
-            log.error("JWT validation error: {}", e.getMessage());
-            return false;
+            returnValue = false;
         }
+
+        if(subject == null || subject.isEmpty()) {
+            returnValue = false;
+        }
+
+        return returnValue;
+
     }
 
 
