@@ -79,6 +79,8 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         byte[] secretKeyBytes = env.getProperty("token.secret").getBytes(StandardCharsets.UTF_8);
         SecretKey signingKey = new SecretKeySpec(secretKeyBytes, SignatureAlgorithm.HS512.getJcaName());
 
+        String token = env.getProperty("token.secret");
+
         boolean returnValue = true;
         String subject = null;
 
@@ -87,7 +89,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                     .setSigningKey(signingKey)
                     .build();
 
-            subject = jwtParser.parseClaimsJwt(jwt).getBody().getSubject();
+            subject = jwtParser.parseClaimsJws(jwt).getBody().getSubject();
             return true;
         } catch (Exception e) {
             returnValue = false;
