@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="first-service" />
         <module name="order-service" />
+        <module name="config-service" />
         <module name="apigateway-service" />
         <module name="second-service" />
         <module name="service-discovery" />
@@ -26,7 +27,6 @@
     <bytecodeTargetLevel>
       <module name="catalog-service (1)" target="19" />
       <module name="catalog-service (2)" target="19" />
-      <module name="config-service" target="19" />
       <module name="new-toy-msa" target="1.5" />
     </bytecodeTargetLevel>
   </component>
