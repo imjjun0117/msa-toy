@@ -47,7 +47,15 @@ public class UserController {
 
     @GetMapping("/health-check")
     public String status() { //http:localhost:60000/health-check
-        return "CHECK OK";
+        return String.format(
+                  "It's Working in User Service"
+                + ", port(local.server.port) = "+ env.getProperty("local.server.port")
+                + ", port(server.port) = "+ env.getProperty("server.port")
+                + ", welcom message = "+ env.getProperty("greeting.message")
+                + ", gateway ip(env) = "+ env.getProperty("gateway.ip")
+                + ", token secret key = "+ env.getProperty("token.secret")
+                + ", token expiration time = "+ env.getProperty("token.expiration-time")
+                );
     }
 
 

@@ -82,5 +82,16 @@ spring:
                 - Path=/order-service/**
 
 
-token:
-  secret: my-very-long-secret-key-1239481239481239481239481239481239481239481
+#token:
+#  secret: my-very-long-secret-key-1239481239481239481239481239481239481239481
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - refresh
+          - health
+          - beans
+          - info
+          - httpexchages

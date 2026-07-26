@@ -38,6 +38,7 @@ public class WebSecurity {
         http.csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
 //                        .requestMatchers("/**").access((authentication, context) -> {
 //                            String ip = context.getRequest().getRemoteAddr();
 //                            boolean allowed =

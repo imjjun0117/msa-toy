@@ -1,11 +1,9 @@
 server:
-  port: 0
+  port: 60000
 
 spring:
   application:
     name: user-service
-  profiles:
-    active: dev #application-dev.yml 을 불러옴
   #  config:
 #    import: "optional:configserver:http://localhost:8888"
   h2:
@@ -36,7 +34,7 @@ eureka:
       defaultZone: http://127.0.0.1:8761/eureka
 
 greeting:
-  message: Welcome to the Simple E-commerce. (spring boot)
+  message: Welcome to the Simple E-commerce. (dev profile)
 
 
 token:
