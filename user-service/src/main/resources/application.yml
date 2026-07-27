@@ -4,8 +4,13 @@ server:
 spring:
   application:
     name: user-service
-  profiles:
-    active: dev #application-dev.yml 을 불러옴
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+#  profiles:
+#    active: dev #application-dev.yml 을 불러옴
   #  config:
 #    import: "optional:configserver:http://localhost:8888"
   h2:
@@ -52,3 +57,4 @@ management:
           - health
           - beans
           - info
+          - busrefresh
