@@ -21,6 +21,15 @@ spring:
           default-label: master
 #          username: [username]
 #          password: [password]
+    stream:
+      bindings:
+        springCloudBusInput:
+          group: config-service
+          #  1. 큐 생성
+          #  2. 잠깐 아무도 안 씀 → RabbitMQ가 삭제
+          #  3. consumer가 큐 찾으러 옴 → 없음 → 에러
+          # 해당 설정 추가로 해결
+
 management:
   endpoints:
     web:

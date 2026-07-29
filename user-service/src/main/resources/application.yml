@@ -9,6 +9,11 @@ spring:
     port: 5672
     username: guest
     password: guest
+  cloud:
+    stream:
+      bindings:
+        springCloudBusInput:
+          group: user-service
 #  profiles:
 #    active: dev #application-dev.yml 을 불러옴
   #  config:
@@ -47,6 +52,7 @@ greeting:
 token:
   secret: my-very-long-secret-key-1239481239481239481239481239481239481239481
   expiration-time: 86400000 # 10days
+
 
 management:
   endpoints:

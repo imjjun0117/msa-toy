@@ -2,4 +2,4 @@ spring:
   cloud:
     config:
       uri: http://127.0.0.1:8888
-      name: ecommerce
+      name: config-service #config-service의 default 설정 파일을 들고옴(application.yml)
