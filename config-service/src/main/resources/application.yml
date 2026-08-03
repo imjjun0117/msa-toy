@@ -1,6 +1,9 @@
 server:
   port: 8888
 
+encrypt:
+  key: abcdefghijklmnopqrstuvwxyz1234567890
+
 spring:
   application:
     name: config-service
@@ -10,7 +13,7 @@ spring:
     username: guest
     password: guest
   profiles:
-    active: native
+    active: git
   cloud:
     config:
       server:
