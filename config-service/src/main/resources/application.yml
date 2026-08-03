@@ -2,7 +2,11 @@ server:
   port: 8888
 
 encrypt:
-  key: abcdefghijklmnopqrstuvwxyz1234567890
+#  key: abcdefghijklmnopqrstuvwxyz1234567890
+  key-store:
+    location: file:///Users/hwangseongjun/mywork/52.keystore/apiEncryptionKey.jks
+    password: 1q2w3e4r
+    alias: apiEncryptionKey
 
 spring:
   application:
