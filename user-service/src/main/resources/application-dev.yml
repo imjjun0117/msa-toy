@@ -33,6 +33,11 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
 
+logging:
+  level:
+    com.example.userservice.client: DEBUG
+    org.springframework.security: DEBUG
+
 greeting:
   message: Welcome to the Simple E-commerce. (dev profile)
 
