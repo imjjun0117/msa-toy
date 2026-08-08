@@ -69,7 +69,9 @@ public class UserServiceImpl implements UserService {
 
         UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 
-        String orderUrl = String.format(env.getProperty("order-service.url"), userId);
+        String orderServiceUrl = env.getProperty("order-service.url");
+
+        String orderUrl = String.format(orderServiceUrl, userId);
 
         // config order service url 들고와서 resttemplate으로 통신
         ResponseEntity<List<ResponseOrder>> orderListResponse =
